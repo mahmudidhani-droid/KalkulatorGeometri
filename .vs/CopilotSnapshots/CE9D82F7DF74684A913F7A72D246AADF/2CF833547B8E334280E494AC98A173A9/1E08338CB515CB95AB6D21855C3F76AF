@@ -139,17 +139,61 @@ namespace KalkulatorGeometri
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            
+            txtSisi.Clear();
+            txtPanjang.Clear();
+            txtLebar.Clear();
+            txtTinggi.Clear();
+            txtJari.Clear();
+
+            lblLuas.Text = "0";
+            lblKeliling.Text = "0";
+            lblVolume.Text = "0";
+
+            cmbBangun.SelectedIndex = -1;
+
+            txtSisi.Focus();
         }
 
         private void btnSorting_Click(object sender, EventArgs e)
         {
-            
+            for (int i = 0; i < jumlahData - 1; i++)
+            {
+                for (int j = i + 1; j < jumlahData; j++)
+                {
+                    if (data[i].Luas > data[j].Luas)
+                    {
+                        Riwayat temp = data[i];
+                        data[i] = data[j];
+                        data[j] = temp;
+                    }
+                }
+            }
+
+            lstRiwayat.Items.Clear();
+
+            for (int i = 0; i < jumlahData; i++)
+            {
+                lstRiwayat.Items.Add(
+                    data[i].NamaBangun +
+                    " | Luas = " +
+                    data[i].Luas.ToString("0.00"));
+            }
+
+            MessageBox.Show("Data berhasil diurutkan berdasarkan luas.");
         }
 
         private void btnKeluar_Click(object sender, EventArgs e)
         {
-          
+            DialogResult hasil = MessageBox.Show(
+                "Yakin ingin keluar?",
+                "Konfirmasi",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (hasil == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
 
         private void lstRiwayat_SelectedIndexChanged(object sender, EventArgs e)
